@@ -108,7 +108,9 @@
                                 <div><label> IP/Net: </label>
                                     <input type="text" data-ng-model="i.ip" class="form-control" placeholder="0.0.0.0/0" pattern="(^$)|(((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}/[0-9]+$)" /></div>
                                 <div><label> Complete DNS Name: </label>
-                                    <input type="text" data-ng-model="i.name" class="form-control" placeholder="root-ns. | nome.authority." pattern=".*\.$"/></div>
+
+                                    <input type="text" data-ng-model="i.name" class="form-control" placeholder="root-ns. | nome.authority." pattern=".*\.$"/>
+                                  <label>Se web server inserire nodo (e.g. web.srv.)</label></div>
                                 <hr />
                             </div>
                             <label>Directly in {{x.name}}.startup:</label>
