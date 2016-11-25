@@ -28,6 +28,8 @@
     This tool allows to quickly generate most of the files and folders you need to run a working netkit lab.
     The main purpose is to quickly generate the files and folders needed with low configuration options, so more
     advanced funtionalities are omitted and some others are set by default (like zebra username and password).
+
+    Remember to # tar -czvf nome_archivio.tar.gz nome_cartella_da_archiviare !
 </div>
 <hr />
 
@@ -149,6 +151,8 @@
                         </td>
                         <td data-ng-show="x.type=='ws'">
                             <input title="userdir" type="checkbox" value="1" data-ng-model="x.ws.userdir" /> Enable <strong>userdir</strong> module?
+                            <p>(Se devi inserire le directory utente)</p>
+                            <p>OPT: a2enmod + (rewrite | proxy | cgi/cgid)</p>
                         </td>
                         <td data-ng-show="x.type=='terminale'">
                             <label>Reference DNS (resolv.conf nameserver) </br>[Per i terminali inserire il local NS] :</label>
