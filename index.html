@@ -97,7 +97,7 @@
                             <div><label>Machine {{x.row}}:</label>
                                 <input type="text" data-ng-model="x.name" class="form-control" placeholder="pc" required /></div>
                             <input title="type" type="radio" value="terminale" data-ng-model="x.type" /> Terminal<br />
-                            <input title="type" type="radio" value="router" data-ng-model="x.type" /> Router<br />
+                            <input title="type" type="radio" value="router" data-ng-model="x.type" /> Router (WebSwitch)<br />
                             <input title="type" type="radio" value="ns" data-ng-model="x.type" /> Name Server<br />
                             <input title="type" type="radio" value="ws" data-ng-model="x.type" /> Web Server<br />
                         </td>
@@ -155,7 +155,8 @@
                             <p>OPT: a2enmod + (rewrite | proxy | cgi/cgid)</p>
                         </td>
                         <td data-ng-show="x.type=='terminale'">
-                            <label>Reference DNS (resolv.conf nameserver) </br>[Per i terminali inserire il local NS] :</label>
+                            <label>Reference DNS <br /> (resolv.conf nameserver):</label>
+                            <p>Per gli host term. il local NS</p><br /><br />
                             <select title="en" data-ng-model="x.pc.dns">
                                 <option value="-" selected>-</option>
                                 <optgroup data-ng-repeat="m in netkit" data-ng-if="m.type == 'ns'" label="{{m.name}}">
@@ -164,7 +165,8 @@
                             </select>
                         </td>
                         <td data-ng-show="x.type=='router'">
-                            <label>Dynamic routing: </label><br /><br />
+                            <label>Dynamic Routing: </label>
+                            <p>Lasciare vuoto per WS</p><br /><br />
                             <div><input title="en" type="checkbox" value="router" data-ng-model="x.routing.rip.en" /> rip</div>
                             <div data-ng-show="x.routing.rip.en">
                                 <span class="btn btn-success btn-square" data-ng-click="addRipNetwork(x)">+</span>
