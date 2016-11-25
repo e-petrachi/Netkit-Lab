@@ -105,7 +105,7 @@
                             <div class="hidelasthr" data-ng-repeat="i in x.interfaces.if">
                                 <div><label>Nome LAN su Eth{{i.eth.number}}: </label>
                                     <input type="text" data-ng-model="i.eth.domain" class="form-control" placeholder="A" required /></div>
-                                <div><label> IP/Net: </label>
+                                <div><label> IP/Subnet dell'host: </label>
                                     <input type="text" data-ng-model="i.ip" class="form-control" placeholder="0.0.0.0/0" pattern="(^$)|(((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}/[0-9]+$)" /></div>
                                 <div><label> Nome DNS: </label>
 
@@ -128,7 +128,7 @@
                                     <input type="text" data-ng-model="j.route" class="form-control" placeholder="0.0.0.0/0" pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}/[0-9]+$" />
 
                                 </div>
-                                <div><label>Prossimo GW (required):</label>
+                                <div><label>Next GW dir.conn. (required):</label>
                                     <input type="text" data-ng-model="j.gw" class="form-control" placeholder="0.0.0.0" pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$" /></div>
                                 <div><label>Interface:</label>
                                     <select title="eth" data-ng-model="j.if" class="form-control">
