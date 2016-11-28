@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=0.4" />
-    <meta name="author" content="Lykon, Lollo, Neeja" />
+    <meta name="author" content="Lykon, Lollo, Neeja, Petrachi" />
     <title>Netkit Lab Generator</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
@@ -98,8 +98,14 @@
                                 <input type="text" data-ng-model="x.name" class="form-control" placeholder="pc" required /></div>
                             <input title="type" type="radio" value="terminale" data-ng-model="x.type" /> Terminal<br />
                             <input title="type" type="radio" value="router" data-ng-model="x.type" /> Router (WebSwitch)<br />
+
                             <input title="type" type="radio" value="ns" data-ng-model="x.type" /> Name Server<br />
                             <input title="type" type="radio" value="ws" data-ng-model="x.type" /> Web Server<br />
+                            <p style="color:orange"><br />NB: WS vanno configurati <br />
+                              come Router poi manualm. <br />
+                              si deve scrivere dentro <br />
+                              ws.startup politica e rotte <br />
+                              Vedi: LAB LoadBalancer</p>
                         </td>
                         <td class="interfaces">
                             <div class="btn btn-success" data-ng-click="addInterface(x)">Add interface</div>
@@ -124,7 +130,7 @@
                             <div class="btn btn-success" data-ng-click="addGateway(x)">Add gateway</div>
                             <div class="btn btn-danger" data-ng-click="removeGateway(x)" data-ng-disabled="x.gateways.counter<=1">Remove last gw</div><br />
                             <div class="hidelasthr" data-ng-repeat="j in x.gateways.gw">
-                                <div><label>Route (solo rotte non DC o ambigue):</label>
+                                <div><label>Static Routing (solo rotte non DC o ambigue):</label>
                                   <p>Per i Router (LAN address non DC)</p>
                                   <p>Per i NS ambigui (LAN address non DC)</p>
                                     <input type="text" data-ng-model="j.route" class="form-control" placeholder="0.0.0.0/0" pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}/[0-9]+$" />
@@ -182,9 +188,10 @@
                                     <input type="text" placeholder="0.0.0.0/0" pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}/[0-9]+$" class="form-control" data-ng-model="x.routing.rip.route[$index]" />
                                 </div>
 
-                                <div><input title="redistributeo" type="checkbox" value="1" data-ng-model="x.routing.rip.ospf" /> redistribute ospf</div>
-                                <div><input title="redistributeb" type="checkbox" value="1" data-ng-model="x.routing.rip.bgp" /> redistribute bgp</div>
-                                <div><input title="redistributec" type="checkbox" value="1" data-ng-model="x.routing.rip.connected" /> redistribute connected</div>
+                                <div><input title="redistributeo" type="checkbox" value="1" data-ng-model="x.routing.rip.ospf" /> Redistribute OSPF</div>
+                                <div><input title="redistributeb" type="checkbox" value="1" data-ng-model="x.routing.rip.bgp" /> Redistribute BGP</div>
+                                <div><input title="redistributec" type="checkbox" value="1" data-ng-model="x.routing.rip.connected" /> Redistribute Connected</div>
+                                <p style="color:blue">RC! Abilitare per estendere <br /> verso Router con diversi <br /> tipi di Dynamic Routing </p>
                                 <label>Directly in ripd.conf:</label>
                                 <textarea title="free" rows="3" class="form-control" data-ng-model="x.routing.rip.free"></textarea>
                             </div>
@@ -205,10 +212,11 @@
                                     <input title="stub" type="checkbox" value="1" data-ng-model="x.routing.ospf.stub[$index]" /> stub?
                                 </div>
 
-                                <div><input title="redistributer" type="checkbox" value="1" data-ng-model="x.routing.ospf.rip" /> redistribute rip</div>
-                                <div><input title="redistributeb" type="checkbox" value="1" data-ng-model="x.routing.ospf.bgp" /> redistribute bgp</div>
-                                <div><input title="redistributec" type="checkbox" value="1" data-ng-model="x.routing.ospf.connected" /> redistribute connected</div>
-                                <label>Cost: </label>
+                                <div><input title="redistributer" type="checkbox" value="1" data-ng-model="x.routing.ospf.rip" /> Redistribute RIP</div>
+                                <div><input title="redistributeb" type="checkbox" value="1" data-ng-model="x.routing.ospf.bgp" /> Redistribute BGP</div>
+                                <div><input title="redistributec" type="checkbox" value="1" data-ng-model="x.routing.ospf.connected" /> Redistribute Connected</div>
+                                <p style="color:blue">RC! Abilitare per estendere <br /> verso Router con diversi <br /> tipi di Dynamic Routing </p>
+                                <label>Costi: </label>
                                 <div data-ng-repeat="o in x.interfaces.if">
                                     <div><input type="text" placeholder="0" class="form-control" data-ng-model="x.routing.ospf.if[o.eth.number].cost" pattern="[0-9]*" /></div>
                                     <select title="eth" data-ng-model="x.routing.ospf.if[o.eth.number].interface" class="form-control" style="margin-bottom: 4px;">
@@ -244,6 +252,9 @@
                                     <textarea title="free" rows="3" class="form-control" data-ng-model="x.routing.bgp.free"></textarea>
                                 </div>
                             </div>
+                            <hr />
+                            <hr />
+                            <p> SubNet: <a href="http://jodies.de/ipcalc">link</a> !</p>
                             <hr />
                         </td>
                     </tr>
