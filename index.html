@@ -105,7 +105,7 @@
                               come Router poi manualm. <br />
                               si deve scrivere dentro <br />
                               ws.startup politica e rotte <br />
-                              Vedi: LAB LoadBalancer</p>
+                              Vedi tabella sotto!</p>
                         </td>
                         <td class="interfaces">
                             <div class="btn btn-success" data-ng-click="addInterface(x)">Add interface</div>
@@ -156,9 +156,14 @@
                             </div>
                         </td>
                         <td data-ng-show="x.type=='ws'">
-                            <input title="userdir" type="checkbox" value="1" data-ng-model="x.ws.userdir" /> Enable <strong>userdir</strong> module?
-                            <p>(Se devi inserire le directory utente)</p>
-                            <p>OPT: a2enmod + (rewrite | proxy | cgi/cgid)</p>
+                            <input title="userdir" type="checkbox" value="1" data-ng-model="x.ws.userdir" /> ABILITA <strong> userdir </strong> ?<br /><br />
+                            <p>Alternative:<br />
+                              a2enmod userdir (dir. utente)<br />
+                              a2enmod rewrite (URL rewr.)<br />
+                              a2enmod proxy   <br />
+                              a2enmod cgi/cgid</p>
+                            <p>Per inserire pagine web<br />
+                              CREA: <em>/var/www/index.html</em></p>
                         </td>
                         <td data-ng-show="x.type=='terminale'">
                             <label>Reference DNS <br /> (resolv.conf nameserver):</label>
@@ -263,6 +268,63 @@
 
                 <div class="btn btn-success" data-ng-click="addMachine()">Add machine</div>
                 <div class="btn btn-danger" data-ng-click="removeMachine()" data-ng-disabled="counter<=1">Remove last machine</div><br />
+
+                <br />
+                <!-- AGGIUNGI SUGGERIMENTI QUI-->
+
+                <div> <strong>·</strong> Suggerimenti da modificare e inserire manualmente nell'apposito file .startup
+                  <table>
+                    <thead>
+                      <th>Tipo</th><th>Politica</th><th>Contenuto</th>
+                    </thead>
+                    <tr>
+                      <td>WS</td>
+                      <td>RANDOM<br />
+                      <p style="color:grey; font-size:10px;"><br />LAN richieste 10.0.0.0/24<br />
+                      LAN Server 100.0.0.0/24<br />
+                      Porta in. WS 10.0.0.2<br />
+                      Porte in. S 100.0.0.1, 2, 3</p></td>
+                      <td>
+                        iptables -t nat -A POSTROUTING -s 10.0.0.0/24 -d 100.0.0.0/24 -j MASQUERADE<br />
+                        iptables -t nat -A PREROUTING -d 10.0.0.2 -m statistic --mode random --probability 0.33 -j DNAT --to-destination 100.0.0.1<br />
+                        iptables -t nat -A PREROUTING -d 10.0.0.2 -m statistic --mode random --probability 0.5 -j DNAT --to-destination 100.0.0.2<br />
+                        iptables -t nat -A PREROUTING -d 10.0.0.2 -j DNAT --to-destination 100.0.0.3<br />
+
+                        echo "watch 'iptables -t nat -vnL'" >> /root/.bashrc</td>
+                    </tr>
+                    <tr>
+                      <td>WS</td>
+                      <td>ROUND ROBIN<br />
+                      <p style="color:grey; font-size:10px;"><br />LAN richieste 10.0.0.0/24<br />
+                      LAN Server 100.0.0.0/24<br />
+                      Porta in. WS 10.0.0.1<br />
+                      Porte in. S 100.0.0.1, 2, 3</p></td>
+                      <td>
+                        iptables -t nat -A POSTROUTING -s 10.0.0.0/24 -d 100.0.0.0/24 -j MASQUERADE<br />
+                        iptables -t nat -A PREROUTING -d 10.0.0.1 -m statistic --mode nth --every 3 -j DNAT --to-destination 100.0.0.1<br />
+                        iptables -t nat -A PREROUTING -d 10.0.0.1 -m statistic --mode nth --every 2 -j DNAT --to-destination 100.0.0.2<br />
+                        iptables -t nat -A PREROUTING -d 10.0.0.1 -j DNAT --to-destination 100.0.0.3<br />
+
+                        echo "watch 'iptables -t nat -vnL'" >> /root/.bashrc</td>
+                    </tr>
+                    <tr>
+                      <td>WS</td>
+                      <td>IP<br />
+                      <p style="color:grey; font-size:10px;"><br />LAN richieste 10.0.0.0/24<br />
+                      LAN Server 100.0.0.0/24<br />
+                      Porta in. WS 10.0.0.3<br />
+                      Porte in. S 100.0.0.1, 2<br />
+                      Client1 10.0.0.10<br />
+                      Client2 10.0.0.11</p></td>
+                      <td>
+                        iptables -t nat -A POSTROUTING -s 10.0.0.0/24 -d 100.0.0.0/24 -j MASQUERADE<br />
+                        iptables -t nat -A PREROUTING -d 10.0.0.3 -s 10.0.0.10 -j DNAT --to-destination 100.0.0.1<br />
+                        iptables -t nat -A PREROUTING -d 10.0.0.3 -s 10.0.0.11 -j DNAT --to-destination 100.0.0.2<br />
+
+                        echo "watch 'iptables -t nat -vnL'" >> /root/.bashrc</td>
+                    </tr>
+                  </table>
+                </div>
 
                 <br />
 
