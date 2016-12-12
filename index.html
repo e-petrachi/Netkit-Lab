@@ -188,7 +188,7 @@
                                 <span class="btn btn-success btn-square" data-ng-click="addRipNetwork(x)">+</span>
                                 <span class="btn btn-danger btn-square" data-ng-click="removeRipNetwork(x)" data-ng-disabled="x.routing.rip.network.length<=1">-</span>
                                 <div data-ng-repeat="rnet in x.routing.rip.network track by $index">
-                                    <label>Network (LAN): </label>
+                                    <label>Network (LAN interna tot SUBN+): </label>
                                     <input type="text" placeholder="0.0.0.0/0" required pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}/[0-9]+$" class="form-control" data-ng-model="x.routing.rip.network[$index]" />
                                 </div>
                                 <span class="btn btn-success btn-square" data-ng-click="addRipRoute(x)">+</span>
@@ -199,9 +199,9 @@
                                 </div>
 
                                 <div><input title="redistributeo" type="checkbox" value="1" data-ng-model="x.routing.rip.ospf" /> Redistribute OSPF</div>
-                                <div><input title="redistributeb" type="checkbox" value="1" data-ng-model="x.routing.rip.bgp" /> Redistribute BGP</div>
-                                <div><input title="redistributec" type="checkbox" value="1" data-ng-model="x.routing.rip.connected" /> Redistribute Connected</div>
-                                <p style="color:blue">RC! Abilitare per estendere <br /> verso Router con diversi <br /> tipi di Dynamic Routing </p>
+                                <div><input title="redistributeb" type="checkbox" value="1" data-ng-model="x.routing.rip.bgp" /> Redistribute BGP (se R di frontiera)</div>
+                                <div><input title="redistributec" type="checkbox" value="1" data-ng-model="x.routing.rip.connected" /> Redistribute Connected (si)</div>
+
                                 <label>Directly in ripd.conf:</label>
                                 <textarea title="free" rows="3" class="form-control" data-ng-model="x.routing.rip.free"></textarea>
                             </div>
@@ -212,7 +212,7 @@
                                 <span class="btn btn-danger btn-square" data-ng-click="removeOspfNetwork(x)" data-ng-disabled="x.routing.ospf.network.length<=1">-</span>
                                 <div data-ng-repeat="onet in x.routing.ospf.network track by $index">
                                     <div>
-                                        <label>Network: </label>
+                                        <label>Network (LAN interna tot SUBN+): </label>
                                         <input type="text" placeholder="0.0.0.0/0" required pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}/[0-9]+$" class="form-control" data-ng-model="x.routing.ospf.network[$index]" />
                                     </div>
                                     <div>
@@ -223,9 +223,8 @@
                                 </div>
 
                                 <div><input title="redistributer" type="checkbox" value="1" data-ng-model="x.routing.ospf.rip" /> Redistribute RIP</div>
-                                <div><input title="redistributeb" type="checkbox" value="1" data-ng-model="x.routing.ospf.bgp" /> Redistribute BGP</div>
-                                <div><input title="redistributec" type="checkbox" value="1" data-ng-model="x.routing.ospf.connected" /> Redistribute Connected</div>
-                                <p style="color:blue">RC! Abilitare per estendere <br /> verso Router con diversi <br /> tipi di Dynamic Routing </p>
+                                <div><input title="redistributeb" type="checkbox" value="1" data-ng-model="x.routing.ospf.bgp" /> Redistribute BGP (se R di frontiera)</div>
+                                <div><input title="redistributec" type="checkbox" value="1" data-ng-model="x.routing.ospf.connected" /> Redistribute Connected (si)</div>
                                 <label>Costi: </label>
                                 <div data-ng-repeat="o in x.interfaces.if">
                                     <div><input type="text" placeholder="0" class="form-control" data-ng-model="x.routing.ospf.if[o.eth.number].cost" pattern="[0-9]*" /></div>
@@ -239,18 +238,18 @@
                             <hr />
                             <div><input title="en" type="checkbox" value="router" data-ng-model="x.routing.bgp.en" /> bgp</div>
                             <div data-ng-show="x.routing.bgp.en">
-                                <label>AS: </label>
+                                <label>AS (omettere sigla): </label>
                                 <input type="text" placeholder="0" pattern="^[0-9]*$" class="form-control" data-ng-model="x.routing.bgp.as" required />
                                 <span class="btn btn-success btn-square" data-ng-click="addBgpNetwork(x)">+</span>
                                 <span class="btn btn-danger btn-square" data-ng-click="removeBgpNetwork(x)" data-ng-disabled="x.routing.bgp.network.length<=1">-</span>
                                 <div data-ng-repeat="bnet in x.routing.bgp.network track by $index">
-                                    <label>Network: </label>
+                                    <label>Network :<br />(LAN confinanti) <br /> Se solo BGP (LAN interna tot SUBN+)</label>
                                     <input type="text" placeholder="0.0.0.0/0" required pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}/[0-9]+$" class="form-control" data-ng-model="x.routing.bgp.network[$index]" />
                                 </div>
                                 <span class="btn btn-success btn-square" data-ng-click="addBgpNeighbor(x)">+</span>
                                 <span class="btn btn-danger btn-square" data-ng-click="removeBgpNeighbor(x)" data-ng-disabled="x.routing.bgp.remote.length<=1">-</span>
                                 <div data-ng-repeat="bremote in x.routing.bgp.remote track by $index">
-                                    <label>Neighbor (empty to omit): </label>
+                                    <label>Neighbor: <br />(IP vicini interni di frontiera)<br />(IP esterni dir.conn.) </label>
                                     <input type="text" placeholder="0.0.0.0" pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$" class="form-control" data-ng-model="x.routing.bgp.remote[$index].neighbor" />
                                     <label>Remote-AS: </label>
                                     <input type="text" placeholder="0" pattern="^[0-9]*$" class="form-control" data-ng-model="x.routing.bgp.remote[$index].as" />
@@ -265,6 +264,7 @@
                             <hr />
                             <hr />
                             <p> SubNet: <a href="http://jodies.de/ipcalc">link</a> !</p>
+                            <p> MED: metric <br /> PREF: local-preference </p>
                             <hr />
                         </td>
                     </tr>
