@@ -223,11 +223,11 @@ function makeNameserver(nk, lab) {
 function makeBgpConf(router, lab){
 
     lab["file"][router.name + "/etc/zebra/daemons"] += "bgpd=yes\n";
-    lab["file"][router.name + "/etc/zebra/bgpd.conf"] = "";
+    //lab["file"][router.name + "/etc/zebra/bgpd.conf"] = "";
 
-    lab["file"][router.name + "/etc/zebra/bgpd.conf"] += "hostname bgpd\n";
-    lab["file"][router.name + "/etc/zebra/bgpd.conf"] += "password zebra\n";
-    lab["file"][router.name + "/etc/zebra/bgpd.conf"] += "enable password zebra\n";
+    //lab["file"][router.name + "/etc/zebra/bgpd.conf"] += "hostname bgpd\n";
+    //lab["file"][router.name + "/etc/zebra/bgpd.conf"] += "password zebra\n";
+    //lab["file"][router.name + "/etc/zebra/bgpd.conf"] += "enable password zebra\n";
 
     lab["file"][router.name + "/etc/zebra/bgpd.conf"] += "\n";
 
@@ -258,10 +258,10 @@ function makeBgpConf(router, lab){
         lab["file"][router.name + "/etc/zebra/bgpd.conf"] += "\n" + router.routing.bgp.free + "\n";
     //
 
-    lab["file"][router.name + "/etc/zebra/bgpd.conf"] += "\nlog file /var/log/zebra/bgpd.log\n\n";
-    lab["file"][router.name + "/etc/zebra/bgpd.conf"] += "debug bgp\ndebug bgp events\ndebug bgp filters\ndebug bgp fsm\ndebug bgp keepalives\ndebug bgp updates";
+    //lab["file"][router.name + "/etc/zebra/bgpd.conf"] += "\nlog file /var/log/zebra/bgpd.log\n\n";
+    //lab["file"][router.name + "/etc/zebra/bgpd.conf"] += "debug bgp\ndebug bgp events\ndebug bgp filters\ndebug bgp fsm\ndebug bgp keepalives\ndebug bgp updates";
 
-    lab["file"][router.name + "/etc/zebra/bgpd.conf"] += "\n";
+    //lab["file"][router.name + "/etc/zebra/bgpd.conf"] += "\n";
 
 }
 
@@ -287,13 +287,13 @@ function makeRouter(nk, lab) {
 
                 if (nk[mindex].routing.rip.en) {
                     lab["file"][nk[mindex].name + "/etc/zebra/daemons"] += "ripd=yes\n";
-                    lab["file"][nk[mindex].name + "/etc/zebra/ripd.conf"] = "";
+                    //lab["file"][nk[mindex].name + "/etc/zebra/ripd.conf"] = "";
 
-                    lab["file"][nk[mindex].name + "/etc/zebra/ripd.conf"] += "hostname ripd\n";
-                    lab["file"][nk[mindex].name + "/etc/zebra/ripd.conf"] += "password zebra\n";
-                    lab["file"][nk[mindex].name + "/etc/zebra/ripd.conf"] += "enable password zebra\n";
+                    //lab["file"][nk[mindex].name + "/etc/zebra/ripd.conf"] += "hostname ripd\n";
+                    //lab["file"][nk[mindex].name + "/etc/zebra/ripd.conf"] += "password zebra\n";
+                    //lab["file"][nk[mindex].name + "/etc/zebra/ripd.conf"] += "enable password zebra\n";
 
-                    lab["file"][nk[mindex].name + "/etc/zebra/ripd.conf"] += "\n";
+                    //lab["file"][nk[mindex].name + "/etc/zebra/ripd.conf"] += "\n";
 
                     lab["file"][nk[mindex].name + "/etc/zebra/ripd.conf"] += "router rip\n";
 
@@ -310,13 +310,13 @@ function makeRouter(nk, lab) {
 
                 if (nk[mindex].routing.ospf.en) {
                     lab["file"][nk[mindex].name + "/etc/zebra/daemons"] += "ospfd=yes\n";
-                    lab["file"][nk[mindex].name + "/etc/zebra/ospfd.conf"] = "";
+                    //lab["file"][nk[mindex].name + "/etc/zebra/ospfd.conf"] = "";
 
-                    lab["file"][nk[mindex].name + "/etc/zebra/ospfd.conf"] += "hostname ospfd\n";
-                    lab["file"][nk[mindex].name + "/etc/zebra/ospfd.conf"] += "password zebra\n";
-                    lab["file"][nk[mindex].name + "/etc/zebra/ospfd.conf"] += "enable password zebra\n";
+                    //lab["file"][nk[mindex].name + "/etc/zebra/ospfd.conf"] += "hostname ospfd\n";
+                    //lab["file"][nk[mindex].name + "/etc/zebra/ospfd.conf"] += "password zebra\n";
+                    //lab["file"][nk[mindex].name + "/etc/zebra/ospfd.conf"] += "enable password zebra\n";
 
-                    lab["file"][nk[mindex].name + "/etc/zebra/ospfd.conf"] += "\n";
+                    //lab["file"][nk[mindex].name + "/etc/zebra/ospfd.conf"] += "\n";
 
                     lab["file"][nk[mindex].name + "/etc/zebra/ospfd.conf"] += "router ospf\n";
 
@@ -379,11 +379,11 @@ function makeRouter(nk, lab) {
 
                 //nb: e infine i log
                 if (nk[mindex].routing.rip.en) {
-                    lab["file"][nk[mindex].name + "/etc/zebra/ripd.conf"] += "\nlog file /var/log/zebra/ripd.log\n";
+                    //lab["file"][nk[mindex].name + "/etc/zebra/ripd.conf"] += "\nlog file /var/log/zebra/ripd.log\n";
                 }
 
                 if (nk[mindex].routing.ospf.en) {
-                    lab["file"][nk[mindex].name + "/etc/zebra/ospfd.conf"] += "\nlog file /var/log/zebra/ospfd.log\n";
+                    //lab["file"][nk[mindex].name + "/etc/zebra/ospfd.conf"] += "\nlog file /var/log/zebra/ospfd.log\n";
                 }
             }
     }

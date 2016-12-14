@@ -55,24 +55,24 @@
                         <td>
                             <div>
                                 <label>Description:</label>
-                                <input type="text" data-ng-model="labInfo.description" class="form-control" placeholder="Exam 2-A 'Harpoon'" />
+                                <input type="text" data-ng-model="labInfo.description" class="form-control" placeholder="Exam 1-A 'Pendant'" />
                             </div>
-                            <div>
+                            <!--<div>
                                 <label>Version:</label>
                                 <input type="text" data-ng-model="labInfo.version" class="form-control" placeholder="1.0" />
-                            </div>
+                            </div>-->
                             <div>
                                 <label>Author(s):</label>
                                 <input type="text" data-ng-model="labInfo.author" class="form-control" placeholder="M. Rossi, F. Bianchi" />
                             </div>
-                            <div>
+                            <!--<div>
                                 <label>Email:</label>
                                 <input type="email" data-ng-model="labInfo.email" class="form-control" placeholder="m.rossi@provider.dom" />
                             </div>
                             <div>
                                 <label>Website:</label>
                                 <input type="text" data-ng-model="labInfo.web" class="form-control" placeholder="http://yoursite.dom" />
-                            </div>
+                            </div>-->
                         </td>
                     </tr>
                 </table>
@@ -88,8 +88,9 @@
                     <tr>
                         <th>Machine informations</th>
                         <th>Network interfaces</th>
-                        <th>Gateway (static):</th>
+                        <th>STATIC routing</th>
                         <th colspan="4">Additional functions</th>
+
                     </tr>
 
                     <tr data-ng-repeat="x in netkit track by $index">
@@ -111,32 +112,32 @@
                             <div class="btn btn-success" data-ng-click="addInterface(x)">Add interface</div>
                             <div class="btn btn-danger" data-ng-click="removeInterface(x)" data-ng-disabled="x.interfaces.counter<=1">Remove last interface</div><br />
                             <div class="hidelasthr" data-ng-repeat="i in x.interfaces.if">
-                                <div><label>Nome LAN su Eth{{i.eth.number}}: </label>
+                                <div><label>Nome LAN su <strong style="color:red">eth{{i.eth.number}}</strong>:</label>
                                     <input type="text" data-ng-model="i.eth.domain" class="form-control" placeholder="A" required /></div>
-                                <div><label> IP/Subnet dell'host: </label>
+                                <div><label> <strong style="color:red">IP/sub</strong> dell'interfaccia: </label>
                                     <input type="text" data-ng-model="i.ip" class="form-control" placeholder="0.0.0.0/0" pattern="(^$)|(((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}/[0-9]+$)" /></div>
                                 <div><label> Nome DNS: </label>
 
                                     <input type="text" data-ng-model="i.name" class="form-control" placeholder="root-ns. | nome.authority." pattern=".*\.$"/>
-                                  <p>Se WS inserire nodo DNS (e.g. web.srv.)</p>
-                                  <p>Se NS non è authority lasciare vuoto</p>
+                                  <p>Se WS inserire nodo DNS (e.g. web.srv.)<br />
+                                  Se NS non è authority lasciare vuoto</p>
                                 </div>
                                 <hr />
                             </div>
                             <label>Directly in {{x.name}}.startup:</label>
-                            <textarea title="free" rows="3" class="form-control" data-ng-model="x.interfaces.free"></textarea>
+                            <textarea title="free" rows="2"  cols="40" class="form-control" data-ng-model="x.interfaces.free"></textarea>
                         </td>
                         <td class="gateways">
                             <div class="btn btn-success" data-ng-click="addGateway(x)">Add gateway</div>
                             <div class="btn btn-danger" data-ng-click="removeGateway(x)" data-ng-disabled="x.gateways.counter<=1">Remove last gw</div><br />
                             <div class="hidelasthr" data-ng-repeat="j in x.gateways.gw">
-                                <div><label>STATIC Routing:<br />solo rotte non DC o ambigue</label>
+                                <div><label>Solo rotte non DC o ambigue</label>
                                   <p>Router e NS ambigui (LAN address)</p>
-                                    <input type="text" data-ng-model="j.route" class="form-control" placeholder="0.0.0.0/0" pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}/[0-9]+$" />
+                                    <input type="text" data-ng-model="j.route" size="30" class="form-control" placeholder="0.0.0.0/0" pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}/[0-9]+$" />
 
                                 </div>
                                 <div><label>Next GW dir.conn. (required):</label>
-                                    <input type="text" data-ng-model="j.gw" class="form-control" placeholder="0.0.0.0" pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$" /></div>
+                                    <input type="text" data-ng-model="j.gw" size="30" class="form-control" placeholder="0.0.0.0" pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$" /></div>
                                 <div><label>Interface:</label>
                                     <select title="eth" data-ng-model="j.if" class="form-control">
                                         <option data-ng-repeat="i in x.interfaces.if" value="{{i.eth.number}}">eth{{i.eth.number}}</option>
@@ -188,7 +189,7 @@
                                 <span class="btn btn-success btn-square" data-ng-click="addRipNetwork(x)">+</span>
                                 <span class="btn btn-danger btn-square" data-ng-click="removeRipNetwork(x)" data-ng-disabled="x.routing.rip.network.length<=1">-</span>
                                 <div data-ng-repeat="rnet in x.routing.rip.network track by $index">
-                                    <label>Network (LAN interna tot SUBN+): </label>
+                                    <label>Network (<strong style="color:red">LAN/sub</strong>interna totale ): </label>
                                     <input type="text" placeholder="0.0.0.0/0" required pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}/[0-9]+$" class="form-control" data-ng-model="x.routing.rip.network[$index]" />
                                 </div>
                                 <span class="btn btn-success btn-square" data-ng-click="addRipRoute(x)">+</span>
@@ -203,7 +204,7 @@
                                 <div><input title="redistributec" type="checkbox" value="1" data-ng-model="x.routing.rip.connected" /> Redistribute Connected (si)</div>
 
                                 <label>Directly in ripd.conf:</label>
-                                <textarea title="free" rows="3" class="form-control" data-ng-model="x.routing.rip.free"></textarea>
+                                <textarea title="free" rows="2" cols="70" class="form-control" data-ng-model="x.routing.rip.free"></textarea>
                             </div>
                             <hr />
                             <div><input title="en" type="checkbox" value="ns" data-ng-model="x.routing.ospf.en" /> ospf</div>
@@ -212,14 +213,14 @@
                                 <span class="btn btn-danger btn-square" data-ng-click="removeOspfNetwork(x)" data-ng-disabled="x.routing.ospf.network.length<=1">-</span>
                                 <div data-ng-repeat="onet in x.routing.ospf.network track by $index">
                                     <div>
-                                        <label>Network (LAN interna tot SUBN+): </label>
+                                        <label>Network (<strong style="color:red">LAN/sub</strong>interna totale ): </label>
                                         <input type="text" placeholder="0.0.0.0/0" required pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}/[0-9]+$" class="form-control" data-ng-model="x.routing.ospf.network[$index]" />
                                     </div>
                                     <div>
                                         <label>Area: </label>
                                         <input type="text" placeholder="0.0.0.0" required pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$" class="form-control" data-ng-model="x.routing.ospf.area[$index]" />
                                     </div>
-                                    <input title="stub" type="checkbox" value="1" data-ng-model="x.routing.ospf.stub[$index]" /> stub?
+                                    <input title="stub" type="checkbox" value="1" data-ng-model="x.routing.ospf.stub[$index]" /> Stub?
                                 </div>
 
                                 <div><input title="redistributer" type="checkbox" value="1" data-ng-model="x.routing.ospf.rip" /> Redistribute RIP</div>
@@ -233,32 +234,32 @@
                                     </select>
                                 </div>
                                 <label>Directly in ospfd.conf:</label>
-                                <textarea title="free" rows="3" class="form-control" data-ng-model="x.routing.ospf.free"></textarea>
+                                <textarea title="free" rows="2" cols="70" class="form-control" data-ng-model="x.routing.ospf.free"></textarea>
                             </div>
                             <hr />
                             <div><input title="en" type="checkbox" value="router" data-ng-model="x.routing.bgp.en" /> bgp</div>
                             <div data-ng-show="x.routing.bgp.en">
-                                <label>AS (omettere sigla): </label>
+                                <label>AS proprietario (solo numero): </label>
                                 <input type="text" placeholder="0" pattern="^[0-9]*$" class="form-control" data-ng-model="x.routing.bgp.as" required />
                                 <span class="btn btn-success btn-square" data-ng-click="addBgpNetwork(x)">+</span>
                                 <span class="btn btn-danger btn-square" data-ng-click="removeBgpNetwork(x)" data-ng-disabled="x.routing.bgp.network.length<=1">-</span>
                                 <div data-ng-repeat="bnet in x.routing.bgp.network track by $index">
-                                    <label>Network :<br />(LAN confinanti) <br /> Se solo BGP (LAN interna tot SUBN+)</label>
+                                    <label>Network :<br />(<strong style="color:red">LAN/sub</strong>interna totale) + (<strong style="color:red">LAN/sub</strong>confinanti esterne DC)</label>
                                     <input type="text" placeholder="0.0.0.0/0" required pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}/[0-9]+$" class="form-control" data-ng-model="x.routing.bgp.network[$index]" />
                                 </div>
                                 <span class="btn btn-success btn-square" data-ng-click="addBgpNeighbor(x)">+</span>
                                 <span class="btn btn-danger btn-square" data-ng-click="removeBgpNeighbor(x)" data-ng-disabled="x.routing.bgp.remote.length<=1">-</span>
                                 <div data-ng-repeat="bremote in x.routing.bgp.remote track by $index">
-                                    <label>Neighbor: <br />(IP vicini interni di frontiera)<br />(IP esterni dir.conn.) </label>
+                                    <label>Neighbor: <br />(<strong style="color:red">IP</strong>interni di frontiera o <strong style="color:red">lo:1</strong>) + (<strong style="color:red">IP</strong>esterni DC ) </label>
                                     <input type="text" placeholder="0.0.0.0" pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$" class="form-control" data-ng-model="x.routing.bgp.remote[$index].neighbor" />
                                     <label>Remote-AS: </label>
                                     <input type="text" placeholder="0" pattern="^[0-9]*$" class="form-control" data-ng-model="x.routing.bgp.remote[$index].as" />
-                                    <label>Description: </label>
+                                    <label>Description: (nome router completo per controllo)</label>
                                     <input type="text" title="description" class="form-control" data-ng-model="x.routing.bgp.remote[$index].description" />
                                 </div>
                                 <div>
                                     <label>Directly in bgpd.conf:</label>
-                                    <textarea title="free" rows="3" class="form-control" data-ng-model="x.routing.bgp.free"></textarea>
+                                    <textarea title="free" rows="2" cols="70" class="form-control" data-ng-model="x.routing.bgp.free"></textarea>
                                 </div>
                             </div>
                             <hr />
@@ -374,6 +375,62 @@
                         neighbor 11.0.0.18 route-map dontUseMe out<br />
                         route-map dontUseMe permit 10<br />
                         set as-path prepend 20 20 20
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>R.bgpd.conf</td>
+                      <td>LOODBACK<br />
+                      <p style="color:grey; font-size:10px;"><br />
+                      R annuncia la sua lo:1<br />
+                      Ripeti per tutti i neighbor di frontiera<br />
+                      R  lo:1 = 2.2.2.2/24<br />
+                      R2 lo:1 = 1.1.1.1</p>
+                      </td>
+                      <td>
+                        neighbor 1.1.1.1 remote-as ..<br />
+                        neighbor 1.1.1.1 update-source 2.2.2.2<br />
+                        neighbor 1.1.1.1 description ...<br />
+                        -----------VEDI SOTTO----------------
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>R.startup</td>
+                      <td>LOODBACK<br />
+                      <p style="color:grey; font-size:10px;"><br />
+                      R definisce la sua lo:1<br />
+                      lo:1 = 2.2.2.2/24</p>
+                      </td>
+                      <td>
+                        ifconfig lo:1 2.2.2.2/24 up<br />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>R.bgpd.conf</td>
+                      <td>PREF ME<br />
+                      <p style="color:grey; font-size:10px;"><br />
+                      R annuncia la sua preferenza nel<br />
+                      traffico in uscita verso 30.1.0.2</p>
+                      </td>
+                      <td>
+                        neighbor 30.1.0.2 route-map preferMe in<br />
+                        route-map preferMe permit 10<br />
+                        set local-preference 200<br />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>R.ospfd.conf</td>
+                      <td>eBGP ONLY<br />
+                      <p style="color:grey; font-size:10px;"><br />
+                      R imposta di importare solo<br />
+                      eBGP in OSPF da 30.2.0.20<br />
+                      fanno lo stesso tutti i router<br />
+                      di frontiera verso l'IP esterno DC</p>
+                      </td>
+                      <td>
+                        redistribute bgp route-map eBGPonly<br />
+                        route-map eBGPonly permit 10<br />
+                        match ip next-hop prefix-list eBGPNextHops<br />
+                        ip prefix-list eBGPNextHops permit 30.2.0.20/32
                       </td>
                     </tr>
                   </table>
