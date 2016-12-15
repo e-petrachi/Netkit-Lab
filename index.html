@@ -131,13 +131,15 @@
                             <div class="btn btn-success" data-ng-click="addGateway(x)">Add gateway</div>
                             <div class="btn btn-danger" data-ng-click="removeGateway(x)" data-ng-disabled="x.gateways.counter<=1">Remove last gw</div><br />
                             <div class="hidelasthr" data-ng-repeat="j in x.gateways.gw">
-                                <div><label>Solo rotte non DC o ambigue</label>
+                                <div><label>Solo rotte non d.c. o ambigue</label>
                                   <p>Router e NS ambigui (LAN address)</p>
                                     <input type="text" data-ng-model="j.route" size="30" class="form-control" placeholder="0.0.0.0/0" pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}/[0-9]+$" />
 
                                 </div>
-                                <div><label>Next GW dir.conn. (required):</label>
+                                <div><label>Next Gateway d.c. :</label>
                                     <input type="text" data-ng-model="j.gw" size="30" class="form-control" placeholder="0.0.0.0" pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$" /></div>
+                                    <p>^<strong style="color:red">rotta default</strong>(per i non Router)</p>
+
                                 <div><label>Interface:</label>
                                     <select title="eth" data-ng-model="j.if" class="form-control">
                                         <option data-ng-repeat="i in x.interfaces.if" value="{{i.eth.number}}">eth{{i.eth.number}}</option>
@@ -177,13 +179,6 @@
                         </td>
                         <td data-ng-show="x.type=='router'">
                             <label>DYNAMIC Routing: </label>
-                            <p>Lasciare vuoto per WS</p>
-                            <p style="color:blue; font-size:11px;">
-                              <strong>$</strong> telnet localhost zebra<br />
-                              <strong>$</strong> telnet localhost ripd<br />
-                              <strong>$</strong> telnet localhost ospfd<br />
-                              <strong>$</strong> telnet localhost dgpd<br />
-                            </p>
                             <div><input title="en" type="checkbox" value="router" data-ng-model="x.routing.rip.en" /> rip</div>
                             <div data-ng-show="x.routing.rip.en">
                                 <span class="btn btn-success btn-square" data-ng-click="addRipNetwork(x)">+</span>
@@ -433,6 +428,40 @@
                         ip prefix-list eBGPNextHops permit 30.2.0.20/32
                       </td>
                     </tr>
+                  </table>
+                  <strong>·</strong> Userfull Command
+                    <table>
+                      <thead>
+                        <th>AZIONE</th><th>CMD</th>
+                      </thead>
+                      <tr>
+                        <td>Collegamento host</td>
+                        <td>
+                          <strong>$</strong> ping 1.1.1.1<br />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Rotta </td>
+                        <td>
+                          <strong>$</strong> traceroute 1.1.1.1<br />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Collegamento Browser</td>
+                        <td>
+                          <strong>$</strong> links<br />  
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Collegamento DAEMONS</td>
+                        <td>
+                          <strong>$</strong> telnet localhost zebra<br />
+                          <strong>$</strong> telnet localhost ripd<br />
+                          <strong>$</strong> telnet localhost ospfd<br />
+                          <strong>$</strong> telnet localhost dgpd<br />
+                        </td>
+                      </tr>
+
                   </table>
                 </div>
 
