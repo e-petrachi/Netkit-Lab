@@ -276,7 +276,7 @@
                 <div> <strong>·</strong> Suggerimenti da modificare e inserire manualmente nell'apposito file
                   <table>
                     <thead>
-                      <th>File</th><th>Politica</th><th>Contenuto</th>
+                      <th>File</th><th>Politica</th><th colspan="2">Contenuto</th>
                     </thead>
                     <tr>
                       <td>WS.startup</td>
@@ -285,7 +285,7 @@
                       LAN Server 100.0.0.0/24<br />
                       Porta in. WS 10.0.0.2<br />
                       Porte in. S 100.0.0.1, 2, 3</p></td>
-                      <td>
+                      <td colspan="2">
                         iptables -t nat -A POSTROUTING -s 10.0.0.0/24 -d 100.0.0.0/24 -j MASQUERADE<br />
                         iptables -t nat -A PREROUTING -d 10.0.0.2 -m statistic --mode random --probability 0.33 -j DNAT --to-destination 100.0.0.1<br />
                         iptables -t nat -A PREROUTING -d 10.0.0.2 -m statistic --mode random --probability 0.5 -j DNAT --to-destination 100.0.0.2<br />
@@ -300,7 +300,7 @@
                       LAN Server 100.0.0.0/24<br />
                       Porta in. WS 10.0.0.1<br />
                       Porte in. S 100.0.0.1, 2, 3</p></td>
-                      <td>
+                      <td colspan="2">
                         iptables -t nat -A POSTROUTING -s 10.0.0.0/24 -d 100.0.0.0/24 -j MASQUERADE<br />
                         iptables -t nat -A PREROUTING -d 10.0.0.1 -m statistic --mode nth --every 3 -j DNAT --to-destination 100.0.0.1<br />
                         iptables -t nat -A PREROUTING -d 10.0.0.1 -m statistic --mode nth --every 2 -j DNAT --to-destination 100.0.0.2<br />
@@ -317,7 +317,7 @@
                       Porte in. S 100.0.0.1, 2<br />
                       Client1 10.0.0.10<br />
                       Client2 10.0.0.11</p></td>
-                      <td>
+                      <td colspan="2">
                         iptables -t nat -A POSTROUTING -s 10.0.0.0/24 -d 100.0.0.0/24 -j MASQUERADE<br />
                         iptables -t nat -A PREROUTING -d 10.0.0.3 -s 10.0.0.10 -j DNAT --to-destination 100.0.0.1<br />
                         iptables -t nat -A PREROUTING -d 10.0.0.3 -s 10.0.0.11 -j DNAT --to-destination 100.0.0.2<br />
@@ -333,7 +333,7 @@
                       Porta R2 (vicino) 193.10.11.2<br />
                       LAN privata R2 200.0.0.0/24</p>
                       </td>
-                      <td>
+                      <td colspan="2">
                         neighbor 193.10.11.2 prefix-list partialOut out<br />
                         neighbor 193.10.11.2 prefix-list partialIn in<br />
                         ip prefix-list partialOut permit 100.0.0.0/24<br />
@@ -349,7 +349,7 @@
                       Porta R2 (vicino) 193.10.11.2<br />
                       LAN privata R2 200.0.0.0/24</p>
                       </td>
-                      <td>
+                      <td colspan="2">
                         neighbor 193.10.11.2 route-map myRouteMap in<br />
                         route-map myRouteMap permit 10<br />
                         match ip address myAccessList<br />
@@ -366,7 +366,7 @@
                       essere attraversato dall'esterno<br />
                       a meno che non sia strett.necessario</p>
                       </td>
-                      <td>
+                      <td colspan="2">
                         neighbor 1.1.1.1 default-originate route-map dontUseMe<br />
                         neighbor 1.1.1.1 route-map dontUseMe out<br />
                         route-map dontUseMe permit 10<br />
@@ -382,7 +382,7 @@
                       Ci deve essere un altro R<br />
                       collegato allo stesso AS</p>
                       </td>
-                      <td>
+                      <td colspan="2">
                         neighbor 1.1.1.1 route-map useMeForOutgoingTraffic in<br />
                         neighbor 1.1.1.1 route-map dontUseMeForIncomingTraffic out<br />
                         route-map useMeForOutgoingTraffic permit 10<br />
@@ -399,7 +399,7 @@
                       R annuncia la sua preferenza nel<br />
                       traffico in uscita verso 1.1.1.1</p>
                       </td>
-                      <td>
+                      <td colspan="2">
                         neighbor 1.1.1.1 route-map preferMe in<br />
                         route-map preferMe permit 10<br />
                         set local-preference 200<br />
@@ -414,7 +414,7 @@
                       fanno lo stesso tutti i router<br />
                       di frontiera verso l'IP esterno DC</p>
                       </td>
-                      <td>
+                      <td colspan="2">
                         redistribute bgp route-map eBGPonly<br />
                         route-map eBGPonly permit 10<br />
                         match ip next-hop prefix-list eBGPNextHops<br />
@@ -430,7 +430,7 @@
                       Il link 1.1.1.1 deve essere <br />
                       esternamente dir.conn.</p>
                       </td>
-                      <td>
+                      <td colspan="2">
                         neighbor 1.1.1.1 remote-as 20<br />
                         neighbor 1.1.1.1 route-map preferThis in<br />
                         neighbor 2.2.2.2 remote-as 20<br />
@@ -440,6 +440,7 @@
                         route-map dePreferMe permit 10<br />
                         set metric 10
                       </td>
+
                     </tr>
                     <tr>
                       <td>R.bgpd.conf</td>
@@ -459,6 +460,10 @@
                         route-map inboundBackup permit 10<br />
                         set metric 10
                       </td>
+                      <td>
+                        <img src="images/1.jpg" width="230px"/>
+                        <img src="images/2.jpg" width="230px"/>
+                      </td>
                     </tr>
 
                     <tr>
@@ -470,7 +475,7 @@
                       R  lo:1 = 2.2.2.2/24<br />
                       R2 lo:1 = 1.1.1.1</p>
                       </td>
-                      <td>
+                      <td colspan="2">
                         neighbor 1.1.1.1 remote-as ..<br />
                         neighbor 1.1.1.1 update-source 2.2.2.2<br />
                         ---------------VEDI SOTTO----------------
@@ -483,7 +488,7 @@
                       R definisce la sua lo:1<br />
                       lo:1 = 2.2.2.2/24</p>
                       </td>
-                      <td>
+                      <td colspan="2">
                         ifconfig lo:1 2.2.2.2/24 up<br />
                       </td>
                     </tr>
