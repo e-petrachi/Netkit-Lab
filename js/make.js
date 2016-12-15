@@ -258,7 +258,7 @@ function makeBgpConf(router, lab){
         lab["file"][router.name + "/etc/zebra/bgpd.conf"] += "\n" + router.routing.bgp.free + "\n";
     //
 
-    lab["file"][router.name + "/etc/zebra/bgpd.conf"] += "\nlog file /var/log/zebra/bgpd.log\n\n";
+    //lab["file"][router.name + "/etc/zebra/bgpd.conf"] += "\nlog file /var/log/zebra/bgpd.log\n\n";
     //lab["file"][router.name + "/etc/zebra/bgpd.conf"] += "debug bgp\ndebug bgp events\ndebug bgp filters\ndebug bgp fsm\ndebug bgp keepalives\ndebug bgp updates";
 
     lab["file"][router.name + "/etc/zebra/bgpd.conf"] += "\n";
@@ -379,11 +379,11 @@ function makeRouter(nk, lab) {
 
                 //nb: e infine i log
                 if (nk[mindex].routing.rip.en) {
-                    lab["file"][nk[mindex].name + "/etc/zebra/ripd.conf"] += "\nlog file /var/log/zebra/ripd.log\n";
+                    //lab["file"][nk[mindex].name + "/etc/zebra/ripd.conf"] += "\nlog file /var/log/zebra/ripd.log\n";
                 }
 
                 if (nk[mindex].routing.ospf.en) {
-                    lab["file"][nk[mindex].name + "/etc/zebra/ospfd.conf"] += "\nlog file /var/log/zebra/ospfd.log\n";
+                    //lab["file"][nk[mindex].name + "/etc/zebra/ospfd.conf"] += "\nlog file /var/log/zebra/ospfd.log\n";
                 }
             }
     }
