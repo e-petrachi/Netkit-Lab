@@ -362,52 +362,45 @@
                       <td>R.bgpd.conf</td>
                       <td>DON'T USE ME<br />
                       <p style="color:grey; font-size:10px;"><br />
-                      Porta R2 (vicino) 11.0.0.18<br />
-                      Mio AS-PATH 20</p>
+                      AS20 comunica di non voler<br />
+                      essere attraversato dall'esterno<br />
+                      a meno che non sia strett.necessario</p>
                       </td>
                       <td>
-                        neighbor 11.0.0.18 default-originate route-map dontUseMe<br />
-                        neighbor 11.0.0.18 route-map dontUseMe out<br />
+                        neighbor 1.1.1.1 default-originate route-map dontUseMe<br />
+                        neighbor 1.1.1.1 route-map dontUseMe out<br />
                         route-map dontUseMe permit 10<br />
                         set as-path prepend 20 20 20
                       </td>
                     </tr>
                     <tr>
                       <td>R.bgpd.conf</td>
-                      <td>LOODBACK<br />
+                      <td>USE/DON'T USE<br />
                       <p style="color:grey; font-size:10px;"><br />
-                      R annuncia la sua lo:1<br />
-                      Ripeti per tutti i neighbor di frontiera<br />
-                      R  lo:1 = 2.2.2.2/24<br />
-                      R2 lo:1 = 1.1.1.1</p>
+                      R vuole utilizzare questo link<br />
+                      come uscita e non come ingresso<br/ >
+                      Ci deve essere un altro R<br />
+                      collegato allo stesso AS</p>
                       </td>
                       <td>
-                        neighbor 1.1.1.1 remote-as ..<br />
-                        neighbor 1.1.1.1 update-source 2.2.2.2<br />
-                        neighbor 1.1.1.1 description ...<br />
-                        -----------VEDI SOTTO----------------
+                        neighbor 1.1.1.1 route-map useMeForOutgoingTraffic in<br />
+                        neighbor 1.1.1.1 route-map dontUseMeForIncomingTraffic out<br />
+                        route-map useMeForOutgoingTraffic permit 10<br />
+                        set local-preference 200<br />
+                        route-map dontUseMeForIncomingTraffic permit 10<br />
+                        set metric 10<br />
                       </td>
                     </tr>
-                    <tr>
-                      <td>R.startup</td>
-                      <td>LOODBACK<br />
-                      <p style="color:grey; font-size:10px;"><br />
-                      R definisce la sua lo:1<br />
-                      lo:1 = 2.2.2.2/24</p>
-                      </td>
-                      <td>
-                        ifconfig lo:1 2.2.2.2/24 up<br />
-                      </td>
-                    </tr>
+
                     <tr>
                       <td>R.bgpd.conf</td>
                       <td>PREF ME<br />
                       <p style="color:grey; font-size:10px;"><br />
                       R annuncia la sua preferenza nel<br />
-                      traffico in uscita verso 30.1.0.2</p>
+                      traffico in uscita verso 1.1.1.1</p>
                       </td>
                       <td>
-                        neighbor 30.1.0.2 route-map preferMe in<br />
+                        neighbor 1.1.1.1 route-map preferMe in<br />
                         route-map preferMe permit 10<br />
                         set local-preference 200<br />
                       </td>
@@ -426,6 +419,72 @@
                         route-map eBGPonly permit 10<br />
                         match ip next-hop prefix-list eBGPNextHops<br />
                         ip prefix-list eBGPNextHops permit 30.2.0.20/32
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>R.bgpd.conf</td>
+                      <td>BACKUP 1<br />
+                      <p style="color:grey; font-size:10px;"><br />
+                      R imposta il link 2.2.2.2<br />
+                      come backup del link 1.1.1.1<br />
+                      Il link 1.1.1.1 deve essere <br />
+                      esternamente dir.conn.</p>
+                      </td>
+                      <td>
+                        neighbor 1.1.1.1 remote-as 20<br />
+                        neighbor 1.1.1.1 route-map preferThis in<br />
+                        neighbor 2.2.2.2 remote-as 20<br />
+                        neighbor 2.2.2.2 route-map dePreferMe out<br/ >
+                        route-map preferThis permit 10<br />
+                        set local-preference 200<br />
+                        route-map dePreferMe permit 10<br />
+                        set metric 10
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>R.bgpd.conf</td>
+                      <td>BACKUP 2<br />
+                      <p style="color:grey; font-size:10px;"><br />
+                      R imposta il link 2.2.2.2<br />
+                      come backup del link 1.1.1.1<br />
+                      Il link 1.1.1.1 può essere <br />
+                      connesso ad altri R di frontiera</p>
+                      </td>
+                      <td>
+                        neighbor 2.2.2.2 remote-as 20<br />
+                        neighbor 2.2.2.2 route-map outboundBackup in<br />
+                        neighbor 2.2.2.2 route-map inboundBackup out<br />
+                        route-map outboundBackup permit 10<br />
+                        set local-preference 90<br />
+                        route-map inboundBackup permit 10<br />
+                        set metric 10
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>R.bgpd.conf</td>
+                      <td>LOODBACK 1<br />
+                      <p style="color:grey; font-size:10px;"><br />
+                      R annuncia la sua lo:1<br />
+                      Ripeti per tutti i neighbor di frontiera<br />
+                      R  lo:1 = 2.2.2.2/24<br />
+                      R2 lo:1 = 1.1.1.1</p>
+                      </td>
+                      <td>
+                        neighbor 1.1.1.1 remote-as ..<br />
+                        neighbor 1.1.1.1 update-source 2.2.2.2<br />
+                        ---------------VEDI SOTTO----------------
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>R.startup</td>
+                      <td>LOODBACK 2<br />
+                      <p style="color:grey; font-size:10px;"><br />
+                      R definisce la sua lo:1<br />
+                      lo:1 = 2.2.2.2/24</p>
+                      </td>
+                      <td>
+                        ifconfig lo:1 2.2.2.2/24 up<br />
                       </td>
                     </tr>
                   </table>
@@ -449,7 +508,13 @@
                       <tr>
                         <td>Collegamento Browser</td>
                         <td>
-                          <strong>$</strong> links<br />  
+                          <strong>$</strong> links<br />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Mostra Rotte</td>
+                        <td>
+                          <strong>$</strong> route<br />
                         </td>
                       </tr>
                       <tr>
