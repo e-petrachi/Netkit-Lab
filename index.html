@@ -102,6 +102,7 @@
 
                             <input title="type" type="radio" value="ns" data-ng-model="x.type" /> Name Server<br />
                             <input title="type" type="radio" value="ws" data-ng-model="x.type" /> Web Server<br />
+                            <hr />
                             <p style="color:orange"><br />NB: WS vanno configurati <br />
                               come Router poi manualm. <br />
                               si deve scrivere dentro <br />
@@ -149,10 +150,13 @@
                         </td>
                         <td  data-ng-show="x.type=='ns'">
                             <div>
-                                <div><input title="auth" type="checkbox" value="1" data-ng-model="x.ns.authority" /> I am a Nameserver Authority<br />
+                              <label>DNS:</label>
+                              <hr />
+                                <div><input title="auth" type="checkbox" value="1" data-ng-model="x.ns.authority" /> I am a Nameserver Authority<br /><br />
                                 </div>
-                                <div data-ng-show="x.ns.authority"><label>Zone (Root is .)</label>
-                                    <input type="text" data-ng-model="x.ns.zone" class="form-control" required placeholder=".authority." pattern="(^\..*\.$)|^.$" /></div>
+                                <div data-ng-show="x.ns.authority"><label>Zona</label>
+                                    <input type="text" data-ng-model="x.ns.zone" class="form-control" required placeholder=".authority." pattern="(^\..*\.$)|^.$" />
+                                    <p>Per il nodo root inserisci "."</p></div>
                                 <div><input title="rec" type="checkbox" value="1" data-ng-model="x.ns.recursion" /> Enable recursive<br />
                                 </div>
                             </div>
@@ -160,16 +164,19 @@
                         <td data-ng-show="x.type=='ws'">
                             <input title="userdir" type="checkbox" value="1" data-ng-model="x.ws.userdir" /> ABILITA <strong> userdir </strong> ?<br />
                             <em>/home/guest/public_html/index.html</em><br /><br />
+                            <hr />
                             <p>Alternative:<br />
                               a2enmod rewrite (URL rewr.)<br />
                               a2enmod proxy   <br />
                               a2enmod cgi/cgid</p>
+                              <hr />
                             <p>Per inserire pagine web<br />
                               CREA: <em>/var/www/index.html</em></p>
                         </td>
                         <td data-ng-show="x.type=='terminale'">
                             <label>Reference DNS <br /> (resolv.conf nameserver):</label>
-                            <p>Per gli host term. il local NS</p><br /><br />
+                            <hr />
+                            <p>Per gli host il LOCAL NS</p>
                             <select title="en" data-ng-model="x.pc.dns">
                                 <option value="-" selected>-</option>
                                 <optgroup data-ng-repeat="m in netkit" data-ng-if="m.type == 'ns'" label="{{m.name}}">
@@ -179,7 +186,8 @@
                         </td>
                         <td data-ng-show="x.type=='router'">
                             <label>DYNAMIC Routing: </label>
-                            <div><input title="en" type="checkbox" value="router" data-ng-model="x.routing.rip.en" /> rip</div>
+                            <hr />
+                            <div style="color:blue"><input title="en" type="checkbox" value="router" data-ng-model="x.routing.rip.en" /> RIP</div>
                             <div data-ng-show="x.routing.rip.en">
                                 <span class="btn btn-success btn-square" data-ng-click="addRipNetwork(x)">+</span>
                                 <span class="btn btn-danger btn-square" data-ng-click="removeRipNetwork(x)" data-ng-disabled="x.routing.rip.network.length<=1">-</span>
@@ -202,7 +210,7 @@
                                 <textarea title="free" rows="2" cols="70" class="form-control" data-ng-model="x.routing.rip.free"></textarea>
                             </div>
                             <hr />
-                            <div><input title="en" type="checkbox" value="ns" data-ng-model="x.routing.ospf.en" /> ospf</div>
+                            <div style="color:blue"><input title="en" type="checkbox" value="ns" data-ng-model="x.routing.ospf.en" /> OSPF</div>
                             <div data-ng-show="x.routing.ospf.en">
                                 <span class="btn btn-success btn-square" data-ng-click="addOspfNetwork(x)">+</span>
                                 <span class="btn btn-danger btn-square" data-ng-click="removeOspfNetwork(x)" data-ng-disabled="x.routing.ospf.network.length<=1">-</span>
@@ -232,7 +240,7 @@
                                 <textarea title="free" rows="2" cols="70" class="form-control" data-ng-model="x.routing.ospf.free"></textarea>
                             </div>
                             <hr />
-                            <div><input title="en" type="checkbox" value="router" data-ng-model="x.routing.bgp.en" /> bgp</div>
+                            <div style="color:blue"><input title="en" type="checkbox" value="router" data-ng-model="x.routing.bgp.en" /> BGP</div>
                             <div data-ng-show="x.routing.bgp.en">
                                 <label>AS proprietario (solo numero): </label>
                                 <input type="text" placeholder="0" pattern="^[0-9]*$" class="form-control" data-ng-model="x.routing.bgp.as" required />
@@ -260,6 +268,7 @@
                             <hr />
                             <hr />
                             <p> SubNet: <a href="http://jodies.de/ipcalc">link</a> !</p>
+                            <hr />
                             <p> MED: metric <br /> PREF: local-preference </p>
                             <hr />
                         </td>
