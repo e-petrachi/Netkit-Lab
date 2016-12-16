@@ -13,6 +13,9 @@ body {
     margin-bottom: 2px;
     height: 26px;
 }
+.req {
+   border-color: deepskyblue;
+}
 ::-webkit-input-placeholder {
     color: #9a9a9a !important;
 }

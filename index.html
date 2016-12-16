@@ -119,12 +119,12 @@
                                 <div><label> Nome DNS: </label>
 
                                     <input type="text" data-ng-model="i.name" class="form-control" placeholder="root-ns. | nome.authority." pattern=".*\.$"/>
-                                  <p>Se WS inserire nodo DNS (site.com.)<br />
+                                  <p>Se WS inserisci solo nodo DNS (site.com.)<br />
                                   Se NS non è authority lasciare vuoto</p>
                                 </div>
                                 <hr />
                             </div>
-                            <label>Directly in {{x.name}}.startup:</label>
+                            <label style="color:lightgrey">Directly in {{x.name}}.startup:</label>
                             <textarea title="free" rows="2"  cols="40" class="form-control" data-ng-model="x.interfaces.free"></textarea>
                         </td>
                         <td class="gateways">
@@ -137,11 +137,11 @@
 
                                 </div>
                                 <div><label>Next Gateway d.c. :</label>
-                                    <input type="text" data-ng-model="j.gw" size="30" class="form-control" placeholder="0.0.0.0" pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$" /></div>
+                                    <input type="text" data-ng-model="j.gw" size="30" class="form-control req" placeholder="0.0.0.0" pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$" /></div>
                                     <p>^<strong style="color:red">rotta default</strong>(per i non Router)</p>
 
                                 <div><label>Interface:</label>
-                                    <select title="eth" data-ng-model="j.if" class="form-control">
+                                    <select title="eth" data-ng-model="j.if" class="form-control req">
                                         <option data-ng-repeat="i in x.interfaces.if" value="{{i.eth.number}}">eth{{i.eth.number}}</option>
                                     </select></div>
                                 <hr />
@@ -198,7 +198,7 @@
                                 <div><input title="redistributeb" type="checkbox" value="1" data-ng-model="x.routing.rip.bgp" /> Redistribute BGP (se R di frontiera)</div>
                                 <div><input title="redistributec" type="checkbox" value="1" data-ng-model="x.routing.rip.connected" /> Redistribute Connected (si)</div>
 
-                                <label>Directly in ripd.conf:</label>
+                                <label style="color:lightgrey">Directly in ripd.conf:</label>
                                 <textarea title="free" rows="2" cols="70" class="form-control" data-ng-model="x.routing.rip.free"></textarea>
                             </div>
                             <hr />
@@ -221,14 +221,14 @@
                                 <div><input title="redistributer" type="checkbox" value="1" data-ng-model="x.routing.ospf.rip" /> Redistribute RIP</div>
                                 <div><input title="redistributeb" type="checkbox" value="1" data-ng-model="x.routing.ospf.bgp" /> Redistribute BGP (se R di frontiera)</div>
                                 <div><input title="redistributec" type="checkbox" value="1" data-ng-model="x.routing.ospf.connected" /> Redistribute Connected (si)</div>
-                                <label>Costi: </label>
+                                <label style="color:lightgrey">Costi: </label>
                                 <div data-ng-repeat="o in x.interfaces.if">
                                     <div><input type="text" placeholder="0" class="form-control" data-ng-model="x.routing.ospf.if[o.eth.number].cost" pattern="[0-9]*" /></div>
                                     <select title="eth" data-ng-model="x.routing.ospf.if[o.eth.number].interface" class="form-control" style="margin-bottom: 4px;">
                                         <option data-ng-repeat="i in x.interfaces.if" value="{{i.eth.number}}">eth{{i.eth.number}}</option>
                                     </select>
                                 </div>
-                                <label>Directly in ospfd.conf:</label>
+                                <label style="color:lightgrey">Directly in ospfd.conf:</label>
                                 <textarea title="free" rows="2" cols="70" class="form-control" data-ng-model="x.routing.ospf.free"></textarea>
                             </div>
                             <hr />
@@ -249,11 +249,11 @@
                                     <input type="text" placeholder="0.0.0.0" pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$" class="form-control" data-ng-model="x.routing.bgp.remote[$index].neighbor" />
                                     <label>Remote-AS: </label>
                                     <input type="text" placeholder="0" pattern="^[0-9]*$" class="form-control" data-ng-model="x.routing.bgp.remote[$index].as" />
-                                    <label>Description: (nome router completo per controllo)</label>
+                                    <label style="color:lightgrey">Description: (nome router completo per controllo)</label>
                                     <input type="text" title="description" class="form-control" data-ng-model="x.routing.bgp.remote[$index].description" />
                                 </div>
                                 <div>
-                                    <label>Directly in bgpd.conf:</label>
+                                    <label style="color:lightgrey">Directly in bgpd.conf:</label>
                                     <textarea title="free" rows="2" cols="70" class="form-control" data-ng-model="x.routing.bgp.free"></textarea>
                                 </div>
                             </div>
